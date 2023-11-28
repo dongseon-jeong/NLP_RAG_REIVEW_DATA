@@ -6,6 +6,7 @@ chat
 agent  
 memory  
 생성 테스트  
+RAG : [https://python.langchain.com/docs/use_cases/question_answering/]  
 
 ## 임베딩 모델 선택
 **허깅페이스모델  
