@@ -120,7 +120,8 @@ create_sentence.create(text)
 ```
 
 ### 유사도 검색
-
+인접한 k개의 유사한 결과를 추출합니다.
+자카드 유사도 임계값은 0.3으로 설정했습니다.
 ```python
 from final_output import Search
 
