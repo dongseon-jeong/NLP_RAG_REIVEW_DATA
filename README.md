@@ -13,7 +13,7 @@ klue/roberta-small : [[klue/roberta-small](https://huggingface.co/klue/roberta-s
 kt믿음 : [[KT-AI/midm-bitext-S-7B-inst-v1](https://huggingface.co/KT-AI/midm-bitext-S-7B-inst-v1)]  
 
 ### 오픈ai 모델  
-text-embedding-ada-002  
+text-embedding-ada-002 : [링크](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings)
 
 ## 리트리버
 문서 추출  
