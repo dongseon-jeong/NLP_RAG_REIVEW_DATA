@@ -27,10 +27,8 @@ elestic search
 ## 인덱스 생성
 저장  
 
-## RAG
-활용  
-main.py 코드입니다.  
-langchain과 openai 임베딩을 사용했습니다.
+## RAG 활용
+기존 konlpy mecab 토크나이저를 활용한 워드클라우드를 개선하기 위해 시도하였습니다.  
 
 
 ### 전처리 테이블 생성
