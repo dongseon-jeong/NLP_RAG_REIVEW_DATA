@@ -1,0 +1,9 @@
+datasets
+transformers
+huggingface_hub
+torch
+langchain
+faiss-cpu
+openai<1.0.0
+tiktoken
+jq
