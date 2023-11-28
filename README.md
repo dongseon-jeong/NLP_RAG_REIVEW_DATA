@@ -45,6 +45,7 @@ elestic search
 
 
 ### 전처리 테이블 생성
+빈도수 높은 명사를 추출하는 과정입니다.
 ```python
 from preprocessing import review_tag, re90
 
@@ -53,6 +54,7 @@ re90(in_path,out_path)
 ```
 
 ### 임베딩 생성
+오픈ai 임베딩 모델의 api 결과를 받아 faiss 인덱스를 저장하는 과정입니다.
 ```python
 from review_embedding import Review_Embedding
 
@@ -62,6 +64,7 @@ review_embedding.create_index(index_path)
 ```
 
 ### 문장 생성
+랭체인 메모리 활용 코드입니다.  
 ```python
 from sentence_create import Create_Sentence
 
@@ -89,6 +92,7 @@ create_sentence.create_rag(text)
 ```
 
 ### 키워드 분류
+단순 원샷 러닝 생성입니다.  
 ```python
 from sentence_create import Create_Sentence
 
