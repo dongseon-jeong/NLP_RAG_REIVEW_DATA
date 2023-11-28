@@ -33,16 +33,16 @@ main.py 코드입니다.
 langchain과 openai 임베딩을 사용했습니다.
 
 
-전처리 테이블 생성
-```
+### 전처리 테이블 생성
+```python
 from preprocessing import review_tag, re90
 
 review_tag(in_path,out_path,date)
 re90(in_path,out_path)
 ```
 
-임베딩 생성
-```
+### 임베딩 생성
+```python
 from review_embedding import Review_Embedding
 
 review_embedding = Review_Embedding(out_path)
@@ -50,8 +50,8 @@ review_embedding.create_dataset(out_path)
 review_embedding.create_index(index_path)
 ```
 
-문장 생성
-```
+### 문장 생성
+```python
 from sentence_create import Create_Sentence
 
 nn = pd.read_csv(out_path+"re90.csv")
@@ -77,8 +77,8 @@ create_sentence = Create_Sentence(index_path,"faiss0",template,human_template)
 create_sentence.create_rag(text)
 ```
 
-키워드 분류
-```
+### 키워드 분류
+```python
 from sentence_create import Create_Sentence
 
 text = "예뻐요"
@@ -104,9 +104,9 @@ create_sentence = Create_Sentence(index_path,"faiss0",template,human_template)
 create_sentence.create(text)
 ```
 
-유사도 검색
+### 유사도 검색
 
-```
+```python
 from final_output import Search
 
 search = Search(index_path,"faiss0")
