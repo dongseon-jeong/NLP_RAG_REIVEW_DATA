@@ -78,7 +78,7 @@ create_sentence.create_rag(text)
 ```
 
 키워드 분류
-'''
+```
 from sentence_create import Create_Sentence
 
 text = "예뻐요"
@@ -102,7 +102,7 @@ human_template="다음 문장을 분류해줘, {text}"
 
 create_sentence = Create_Sentence(index_path,"faiss0",template,human_template)
 create_sentence.create(text)
-'''
+```
 
 유사도 검색
 
