@@ -8,11 +8,11 @@ memory
 생성 테스트  
 
 ## 임베딩 모델 선택
-### 허깅페이스모델  
+**허깅페이스모델  
 klue/roberta-small : [[klue/roberta-small](https://huggingface.co/klue/roberta-small)]  
 kt믿음 : [[KT-AI/midm-bitext-S-7B-inst-v1](https://huggingface.co/KT-AI/midm-bitext-S-7B-inst-v1)]  
 
-### 오픈ai 모델  
+**오픈ai 모델  
 text-embedding-ada-002 : [링크](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings)
 
 ## 리트리버
