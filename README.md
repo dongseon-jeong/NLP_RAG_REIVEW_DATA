@@ -1,4 +1,4 @@
-# RAG
+# :camel:RAG
 
 ## langchain
 파이프라인  
@@ -28,7 +28,7 @@ elestic search
 ## 인덱스 생성
 저장  
 
-#  실무 활용
+#  :rocket:실무 활용
 ## 임베딩 활용  
 워드클라우드 전처리  
 
