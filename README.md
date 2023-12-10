@@ -1,12 +1,73 @@
 # :camel:RAG
 
 ## langchain
-파이프라인  
 chat  
+
+```python
+import os
+OPENAI_API_KEY = {my_openai_api_token}
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+
+from langchain.chat_models import ChatOpenAI
+from langchain.schema import (AIMessage,HumanMessage,SystemMessage)
+
+chat = ChatOpenAI(model_name='gpt-3.5-turbo', temperature=0.1)
+sys = SystemMessage(content="당신은 온라인 상품 카테고리를 구분하는 ai입니다. 답변은 단답형으로 합니다.")
+msg = HumanMessage(content='다음 상품의 식품 카테고리를 구분해줘, [박스]피크닉 200ml')
+
+aimsg = chat([sys, msg])
+aimsg.content
+```
+
+prompt
+
+```python
+from langchain.prompts import PromptTemplate
+
+prompt = PromptTemplate(
+    input_variables=["상품"],
+    template="{상품} 다음 상품의 식품 카테고리를 구분해줘",)
+prompt.format(상품="[박스]피크닉 200ml")
+```
+chat+prompt
+
+```python
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts.chat import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
+
+chat = ChatOpenAI(temperature=0)
+
+template="당신은 온라인 상품 카테고리를 구분하는 ai입니다. 답변은 단답형으로 합니다."
+system_message_prompt = SystemMessagePromptTemplate.from_template(template)
+human_template="다음 상품의 식품 카테고리를 구분해줘, {text}"
+human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
+chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
+
+chatchain = LLMChain(llm=chat, prompt=chat_prompt)
+chatchain.run(text="[박스]피크닉 200ml")
+```
+
 agent  
-memory  
-생성 테스트  
-RAG : [https://python.langchain.com/docs/use_cases/question_answering/]  
+```python
+tools = load_tools(["wikipedia"], llm=chat)
+agent = initialize_agent(tools, llm=chat, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
+agent.run("""다음 상품의 식품 카테고리를 구분해줘, [박스]청정원 올리브유 재래김 5g 90봉(9봉x10개)""")
+```
+
+conversation  
+```python
+from langchain import ConversationChain
+conversation = ConversationChain(llm=chat, verbose=True)
+conversation.predict(input="인공지능에서 Transformer가 뭐야?")
+conversation.predict(input="RNN하고 차이 설명해줘.")
+```
+
+
+  
+RAG : [https://python.langchain.com/docs/use_cases/question_answering/] [[참고영상](https://youtu.be/tIU2tw3PMUE?feature=shared)]  
+
+![Untitled](./img/rag.jpg)
+
 
 ## 임베딩 모델 선택
 **허깅페이스모델  
@@ -20,13 +81,14 @@ text-embedding-ada-002 : [링크](https://platform.openai.com/docs/guides/embedd
 문서 추출  
 텍스트 스플리터    
 
-## 벡터 DB
-파인콘  
-faiss  
-elestic search  
+## 벡터 DB  
+> 구조
+임베딩 벡터 + metadata + index
 
-## 인덱스 생성
-저장  
+> - 대표 라이브러리  
+    - 파인콘 sas형식 쉽고 편하고 빠름  
+    - faiss facebook ai sementic search 로컬사용가능하고 무난함  
+    - elestic search 사용이 어려움, 리트리버 학습 가능  
 
 #  :rocket:실무 활용
 ## 임베딩 활용  
