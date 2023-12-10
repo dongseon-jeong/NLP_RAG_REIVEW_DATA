@@ -16,8 +16,8 @@ kt믿음 : [[KT-AI/midm-bitext-S-7B-inst-v1](https://huggingface.co/KT-AI/midm-b
 **오픈ai 모델  
 text-embedding-ada-002 : [링크](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings)
 
-## 임베딩  
-# 워드클라우드 전처리
+## 임베딩 활용  
+워드클라우드 전처리  
 
 ### 대시보드 tokens table 전처리 개선
 
