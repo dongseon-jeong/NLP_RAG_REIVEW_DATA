@@ -9,9 +9,9 @@ from final_output import Search
 
 
 ## 변수 설정
-in_path = "C:\\Users\\jeong\\OneDrive - 크리마\\crema\\project\\insight_v2\\new_탑텐\\output\\"
-out_path = "C:\\Users\\jeong\\langchain\\test\\"
-index_path = "C:\\Users\\jeong\\langchain\\test2\\"
+in_path = "\\output\\"
+out_path = "\\test\\"
+index_path = "\\test2\\"
 date = "2023-09-25"
 # model = ""
 
