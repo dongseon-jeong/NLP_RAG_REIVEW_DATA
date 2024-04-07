@@ -1,102 +1,23 @@
-# :camel:RAG
-
-## langchain
-chat  
-
-```python
-import os
-OPENAI_API_KEY = {my_openai_api_token}
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import (AIMessage,HumanMessage,SystemMessage)
-
-chat = ChatOpenAI(model_name='gpt-3.5-turbo', temperature=0.1)
-sys = SystemMessage(content="당신은 온라인 상품 카테고리를 구분하는 ai입니다. 답변은 단답형으로 합니다.")
-msg = HumanMessage(content='다음 상품의 식품 카테고리를 구분해줘, [박스]피크닉 200ml')
-
-aimsg = chat([sys, msg])
-aimsg.content
-```
-
-prompt
-
-```python
-from langchain.prompts import PromptTemplate
-
-prompt = PromptTemplate(
-    input_variables=["상품"],
-    template="{상품} 다음 상품의 식품 카테고리를 구분해줘",)
-prompt.format(상품="[박스]피크닉 200ml")
-```
-chat+prompt
-
-```python
-from langchain.chat_models import ChatOpenAI
-from langchain.prompts.chat import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
-
-chat = ChatOpenAI(temperature=0)
-
-template="당신은 온라인 상품 카테고리를 구분하는 ai입니다. 답변은 단답형으로 합니다."
-system_message_prompt = SystemMessagePromptTemplate.from_template(template)
-human_template="다음 상품의 식품 카테고리를 구분해줘, {text}"
-human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
-chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
-
-chatchain = LLMChain(llm=chat, prompt=chat_prompt)
-chatchain.run(text="[박스]피크닉 200ml")
-```
-
-agent  
-```python
-tools = load_tools(["wikipedia"], llm=chat)
-agent = initialize_agent(tools, llm=chat, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
-agent.run("""다음 상품의 식품 카테고리를 구분해줘, [박스]청정원 올리브유 재래김 5g 90봉(9봉x10개)""")
-```
-
-conversation  
-```python
-from langchain import ConversationChain
-conversation = ConversationChain(llm=chat, verbose=True)
-conversation.predict(input="인공지능에서 Transformer가 뭐야?")
-conversation.predict(input="RNN하고 차이 설명해줘.")
-```
-
-
-  
-RAG : [https://python.langchain.com/docs/use_cases/question_answering/] [[참고영상](https://youtu.be/tIU2tw3PMUE?feature=shared)]  
-
-![Untitled](./img/rag.jpg)
-
-
-## 임베딩 모델 선택
-**허깅페이스모델  
-klue/roberta-small : [[klue/roberta-small](https://huggingface.co/klue/roberta-small)]  
-kt믿음 : [[KT-AI/midm-bitext-S-7B-inst-v1](https://huggingface.co/KT-AI/midm-bitext-S-7B-inst-v1)]  
-
-**오픈ai 모델  
-text-embedding-ada-002 : [링크](https://platform.openai.com/docs/guides/embeddings/what-are-embeddings)
-
-## 리트리버
-문서 추출  
-텍스트 스플리터    
-
-## 벡터 DB  
-> 구조
-임베딩 벡터 + metadata + index
-
-> - 대표 라이브러리  
-    - 파인콘 sas형식 쉽고 편하고 빠름  
-    - faiss facebook ai sementic search 로컬사용가능하고 무난함  
-    - elestic search 사용이 어려움, 리트리버 학습 가능  
+# 🐫프로젝트 목적
+리뷰 토큰화 후 워드클라우드를 생성 시 2가지 문제를 확인
+1. 긍정 부정 구분 불가
+   "크지 않다" > "크다" "않다" 의 형태로 토큰화되어 "크다"와 "않다"가 각각 집계됨
+2. 리뷰를 멀티라벨 분류를 하면 하나의 리뷰에 여러 키워드가 포함됨
+   "옷은 짧지만 디자인이 이뻐요" > 대시보드에서 디자인 키워드를 선택하더라도 길이에 대한 내용이 함께 노출됨
+   
+문제해결을 위해 리뷰를 임베딩 모델로 벡터 변환하여 벡터화한 토큰과의 유사도를 이용해 집계
+~~~
+대시보드에서 좀 더 정확하고 직관적인 확인을 하기 위해 각 리뷰 토큰을 유사한 키워드와 매칭
+토큰화 시 전처리 과정을 추가하여 부정형태를 유지
+~~~
 
 #  :rocket:실무 활용
-## 임베딩 활용  
-워드클라우드 전처리  
+## 워드클라우드 전처리 추가
 
-### 대시보드 tokens table 전처리 개선
 
-- 대시보드 개선을 위해 추가된 수작업이 많음
+### 대시보드 tokens table 전처리
+
+- 대시보드 개선을 위해 토큰을 수기매칭해야하는 등 수작업이 많음
 - 특히 빈도수 상위 토큰의 키워드 분류는 불가피함
 - 자동화되지 않은 프로세스로 인한 **수작업을 줄이기 위한 작업**
 
